@@ -2,7 +2,11 @@
 /* eslint no-console: 0 */
 import dotenv from 'dotenv'
 import { Client } from 'discord.js'
-import { validPrefix, existCommand } from './bot.js'
+import {
+  validPrefix,
+  existCommand,
+  commandsController
+} from './bot.js'
 
 dotenv.config()
 const client = new Client()
@@ -23,6 +27,8 @@ client.on('message', ctx => {
   }
 
   console.log('Valid command')
+
+  commandsController(ctx)
 })
 
 client.login(process.env.BOT_TOKEN)
