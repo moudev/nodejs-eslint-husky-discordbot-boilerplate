@@ -1,0 +1,43 @@
+{
+  "name": "nodejs-eslint-husky-discord-bot-boilerplate",
+  "version": "1.0.0",
+  "description": "Discord bot boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint --ext .js --ignore-path .gitignore .",
+    "lintfix": "./node_modules/.bin/eslint --fix --ext .js --ignore-path .gitignore .",
+    "lint:husky": "./node_modules/.bin/eslint",
+    "lintfix:husky": "./node_modules/.bin/eslint --fix"
+  },
+  "keywords": [
+    "nodejs",
+    "discord-bot",
+    "bot",
+    "eslint",
+    "husky",
+    "node"
+  ],
+  "author": "Mauricio Martínez",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^4.3.4",
+    "lint-staged": "^10.5.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn lintfix:husky",
+      "yarn lint:husky"
+    ]
+  }
+}
