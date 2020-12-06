@@ -1,5 +1,8 @@
+import { MessageEmbed } from 'discord.js'
+
 const BOT_PREFIX = '!m-'
-const COMMANDS = ['reply', 'test', 'hi']
+const COMMANDS = ['commands', 'reply', 'test', 'hi', 'tag', 'admin']
+const OWNER_BOT = '37581017699083879151' // User discord id without <!@ >
 
 export const validPrefix = (ctx) => {
   const content = ctx.content
@@ -32,16 +35,76 @@ export const extractTextOfMessage = (ctx) => {
 
 export const commandsController = (ctx) => {
   const command = extractCommandWithoutPrefix(ctx)
-  // const text = extractTextOfMessage(ctx)
+  const text = extractTextOfMessage(ctx)
 
   switch (command) {
-    case 'reply':
+    case 'commands': {
+      const list = `
+        \`!m-commands\`: Available commands list
+        \`!m-reply\`: Reply a message
+        \`!m-test\`: Sends a message of example
+        \`!m-hi\`: 'Command without an action specified'
+        \`!m-tag\`: Sends a "hello" to the first user tagged
+        \`!m-admin\`: Only the bot owner can sends a "hello" to the first user tagged
+      `
+      ctx.channel.send(
+        new MessageEmbed()
+          .setTitle('Commands list')
+          .setColor('WHITE')
+          .setDescription(list)
+      )
+      break
+    }
+    case 'reply': {
       ctx.reply('Reply message example')
       break
-    case 'test':
+    }
+    case 'test': {
       ctx.channel.send('`test command action`')
       break
-    default:
+    }
+    case 'tag': {
+      if (text === null || text === undefined) {
+        ctx.channel.send('Sorry, something is wrong with the tag')
+        return
+      }
+
+      const user = text.match(/(<@!\d+>)/gi)
+
+      if (user === null) {
+        ctx.channel.send("Sorry, maybe it's not an user")
+        return
+      }
+
+      const helloMessage = `Hi, ${user[0]}, how are you? Me, a basic user activated this action`
+      ctx.channel.send(helloMessage)
+      break
+    }
+    case 'admin': {
+      if (text === null || text === undefined) {
+        ctx.channel.send('Sorry, something is wrong with the tag')
+        return
+      }
+
+      const { author: { id: authorId } } = ctx
+      if (authorId !== OWNER_BOT) {
+        ctx.channel.send('You do not have permissions')
+        return
+      }
+
+      const username = text.match(/(<@!\d+>)/gi)
+
+      if (username === null) {
+        ctx.channel.send("Sorry, maybe it's not an user")
+        return
+      }
+
+      const basicMessage = `Hi, ${username[0]}, how are you? Me, the bot owner activated this action`
+      ctx.channel.send(basicMessage)
+      break
+    }
+    default: {
       ctx.channel.send('`That command doesn\'t have an action`')
+    }
   }
 }

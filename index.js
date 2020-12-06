@@ -1,4 +1,3 @@
-/* eslint no-useless-return: 0 */
 /* eslint no-console: 0 */
 import dotenv from 'dotenv'
 import { Client } from 'discord.js'
