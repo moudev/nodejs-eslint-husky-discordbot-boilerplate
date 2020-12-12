@@ -4,24 +4,24 @@ const BOT_PREFIX = '!m-'
 const COMMANDS = ['commands', 'reply', 'test', 'hi', 'tag', 'admin']
 const OWNER_BOT = '37581017699083879151' // User discord id without <!@ >
 
-export const validatePrefix = (ctx) => {
+const validatePrefix = (ctx) => {
   const content = ctx.content
   return content.slice(0, BOT_PREFIX.length) === BOT_PREFIX
 }
 
-export const extractCommandWithoutPrefix = (ctx) => {
+const extractCommandWithoutPrefix = (ctx) => {
   const content = ctx.content
   const splittedContent = content.split(' ')
   return splittedContent[0].slice(BOT_PREFIX.length)
 }
 
-export const existCommand = (ctx) => {
+const existCommand = (ctx) => {
   const commandToFind = extractCommandWithoutPrefix(ctx)
   const commandFound = COMMANDS.find(c => c === commandToFind) !== undefined
   return commandFound
 }
 
-export const extractTextOfMessage = (ctx) => {
+const extractTextOfMessage = (ctx) => {
   const content = ctx.content
   const splittedContent = content.split(' ')
 
@@ -33,7 +33,11 @@ export const extractTextOfMessage = (ctx) => {
     .reduce((acc, curr) => `${acc} ${curr}`) // Joined message text without bot-prefix
 }
 
-export const commandsController = (ctx) => {
+const extractUsername = (text) => {
+  return text.match(/(<@!\d+>)/gi)
+}
+
+const commandsController = (ctx) => {
   const command = extractCommandWithoutPrefix(ctx)
   const text = extractTextOfMessage(ctx)
 
@@ -69,7 +73,7 @@ export const commandsController = (ctx) => {
         return
       }
 
-      const user = text.match(/(<@!\d+>)/gi)
+      const user = extractUsername(text)
 
       if (user === null) {
         ctx.channel.send("Sorry, maybe it's not an user")
@@ -92,7 +96,7 @@ export const commandsController = (ctx) => {
         return
       }
 
-      const username = text.match(/(<@!\d+>)/gi)
+      const username = extractUsername(text)
 
       if (username === null) {
         ctx.channel.send("Sorry, maybe it's not an user")
@@ -107,4 +111,10 @@ export const commandsController = (ctx) => {
       ctx.channel.send('`That command doesn\'t have an action`')
     }
   }
+}
+
+export {
+  validatePrefix,
+  existCommand,
+  commandsController
 }
