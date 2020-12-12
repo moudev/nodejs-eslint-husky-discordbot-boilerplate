@@ -4,15 +4,15 @@ const BOT_PREFIX = '!m-'
 const COMMANDS = ['commands', 'reply', 'test', 'hi', 'tag', 'admin']
 const OWNER_BOT = '37581017699083879151' // User discord id without <!@ >
 
-export const validPrefix = (ctx) => {
+export const validatePrefix = (ctx) => {
   const content = ctx.content
   return content.slice(0, BOT_PREFIX.length) === BOT_PREFIX
 }
 
 export const extractCommandWithoutPrefix = (ctx) => {
   const content = ctx.content
-  const splitContent = content.split(' ')
-  return splitContent[0].slice(BOT_PREFIX.length)
+  const splittedContent = content.split(' ')
+  return splittedContent[0].slice(BOT_PREFIX.length)
 }
 
 export const existCommand = (ctx) => {
@@ -23,13 +23,13 @@ export const existCommand = (ctx) => {
 
 export const extractTextOfMessage = (ctx) => {
   const content = ctx.content
-  const splitedContent = content.split(' ')
+  const splittedContent = content.split(' ')
 
-  splitedContent.splice(0, 1) // Removing bot-prefix item from the message array
+  splittedContent.splice(0, 1) // Removing bot-prefix item from the message array
 
-  if (splitedContent.length === 0) return null // When only exists the bot-prefix
+  if (splittedContent.length === 0) return null // When only exists the bot-prefix
 
-  return splitedContent
+  return splittedContent
     .reduce((acc, curr) => `${acc} ${curr}`) // Joined message text without bot-prefix
 }
 
@@ -88,7 +88,7 @@ export const commandsController = (ctx) => {
 
       const { author: { id: authorId } } = ctx
       if (authorId !== OWNER_BOT) {
-        ctx.channel.send('You do not have permissions')
+        ctx.channel.send("You don't have permissions")
         return
       }
 

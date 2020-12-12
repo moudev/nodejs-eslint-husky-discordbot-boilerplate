@@ -2,7 +2,7 @@
 import dotenv from 'dotenv'
 import { Client } from 'discord.js'
 import {
-  validPrefix,
+  validatePrefix,
   existCommand,
   commandsController
 } from './bot.js'
@@ -16,7 +16,7 @@ client.on('ready', () => {
 
 client.on('message', ctx => {
   // If the prefix doesn't match do anything
-  if (!validPrefix(ctx)) {
+  if (!validatePrefix(ctx)) {
     return
   }
 
