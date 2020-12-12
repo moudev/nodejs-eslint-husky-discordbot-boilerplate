@@ -8,7 +8,8 @@ Los siguientes videos fueron tomados como ejemplo para poder hacer este desarrol
 -  [Fazt](https://www.youtube.com/channel/UCX9NJ471o7Wie1DQe94RVIg) -> _[Discord Bot & Node.js, para principiantes](https://www.youtube.com/watch?v=EUB777JJT5E)_ : Base para el uso de comandos básicos
 
 ## 📌 Requerimientos
-- [Node.js](https://nodejs.org/en/download/package-manager/)
+- [Git](https://git-scm.com/downloads) _(>= 2.13.0)_
+- [Node.js](https://nodejs.org/en/download/package-manager/) _(>= 10)_
 - [Yarn - Dependency management](https://classic.yarnpkg.com/en/docs/install) 
 
 ## 📌 Instalación
@@ -16,6 +17,11 @@ Los siguientes videos fueron tomados como ejemplo para poder hacer este desarrol
 - **Clonar repositorio;**
 ```
 git clone https://github.com/moudev/nodejs-eslint-husky-discordbot-boilerplate.git
+```
+
+- **Entrar en carpeta;**
+```
+cd nodejs-eslint-husky-discordbot-boilerplate/
 ```
 
 - **Instalar paquetes;** 
